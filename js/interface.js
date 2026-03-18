@@ -50,35 +50,35 @@ document.addEventListener('DOMContentLoaded', () => {
     inputCelulas.value = configuracoesGrid.tamanhoCelula;
 });
 
-inputInfeccao.addEventListener('blur', () => {
+inputInfeccao.addEventListener('change', () => {
     probabilidade.probabilidadeInfeccao = Number(inputInfeccao.value)
 })
 
-inputInfeccaoMascara.addEventListener('blur', () => {
+inputInfeccaoMascara.addEventListener('change', () => {
     probabilidade.probabilidadeInfeccaoMascara = Number(inputInfeccaoMascara.value)
 })
 
-inputMascara.addEventListener('blur', () => {
+inputMascara.addEventListener('change', () => {
     probabilidade.probabilidadeMascara = Number(inputMascara.value)
 })
 
-inputVacinada.addEventListener('blur', () => {
+inputVacinada.addEventListener('change', () => {
     probabilidade.probabilidadeVacinado = Number(inputVacinada.value)
 })
 
-inputInfeccaoMs.addEventListener('blur', () => {
+inputInfeccaoMs.addEventListener('change', () => {
     configuracoesAplicacao.msEntreRodadas = Number(inputInfeccaoMs.value)
 })
 
-inputColunas.addEventListener('blur', () => {
+inputColunas.addEventListener('change', () => {
     configuracoesGrid.colunasFuturas = Number(inputColunas.value);
 })
 
-inputLinhas.addEventListener('blur', () => {
+inputLinhas.addEventListener('change', () => {
     configuracoesGrid.linhasFuturas = Number(inputLinhas.value);
 })
 
-inputCelulas.addEventListener('blur', () => {
+inputCelulas.addEventListener('change', () => {
     configuracoesGrid.tamanhoCelulaFuturo = Number(inputCelulas.value)
 })
 

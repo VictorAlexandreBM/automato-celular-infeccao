@@ -1,6 +1,6 @@
 "use strict";
 import {grid, gridCopia, configuracoesGrid, configuracoesAplicacao, ESTADO, probabilidade } from "./configs.js";
-import { verificarChance, copiarGrid } from "./utils.js";
+import {verificarChance, copiarMatriz, estaDentroDosLimites} from "./utils.js";
 let simulacaoHandler = null; 
 
 function iniciarSimulacao(){
@@ -21,7 +21,7 @@ function iniciarSimulacao(){
             }
         }
     
-        copiarGrid(gridCopia, grid)
+        copiarMatriz(gridCopia, grid)
 
         console.log('fim')
     }, configuracoesAplicacao.msEntreRodadas);
@@ -49,13 +49,13 @@ function verificarCelulasAoRedor(x, y) {
     const xVizinho = x - 1
     const yVizinho = y - 1
     let quantidadeCelulaDoente = 0
-    let ehMesmaCelula, celulaEstaInfectada, estaDentroDosLimites
+    let ehMesmaCelula, celulaEstaInfectada
 
     for (let i = xVizinho; i < x+2; i++) {
         for (let j = yVizinho; j < y+2; j++) {
             ehMesmaCelula = i === x && j === y;
-            estaDentroDosLimites = i >= 0 && i < configuracoesGrid.colunas && j >= 0 && j < configuracoesGrid.linhas;            
-            celulaEstaInfectada = estaDentroDosLimites && grid[i][j] === ESTADO.INFECTADO;
+            celulaEstaInfectada = estaDentroDosLimites(i, j, configuracoesGrid.colunas, configuracoesGrid.linhas)
+                && grid[i][j] === ESTADO.INFECTADO;
             
             if (celulaEstaInfectada && !ehMesmaCelula) {
                 quantidadeCelulaDoente++;
@@ -80,9 +80,8 @@ function retornarEstadoInfeccao(quantidadeInfectados, estadoAtual){
     const probabilidadeInfeccao = estadoAtual === ESTADO.NAO_INFECTADO ? probabilidade.probabilidadeInfeccao : probabilidade.probabilidadeInfeccaoMascara
 
     for (let i = 0; i < quantidadeInfectados; i++) {
-        numeroSorteado = Math.random()
-        
-        celulaFoiInfectada = verificarChance(probabilidadeInfeccao, numeroSorteado);
+
+        celulaFoiInfectada = verificarChance(probabilidadeInfeccao);
         
         if (celulaFoiInfectada){
             return ESTADO.INFECTADO;

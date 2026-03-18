@@ -1,4 +1,4 @@
-import { verificarChance } from "./utils.js"
+import {copiarMatriz, verificarChance} from "./utils.js"
 import { canva } from "./main.js"
 
 export const LIGHT_GREY = [220]
@@ -64,11 +64,9 @@ function setupGrid() {
     for (let i = 0; i < configuracoesGrid.colunas; i++) {
         grid[i] = []
         for (let j = 0; j < configuracoesGrid.linhas; j++) {
-            numeroSorteadoMascara = Math.random();
-            numeroSorteadoVacinado = Math.random();
 
-            temMascara = verificarChance(probabilidade.probabilidadeMascara, numeroSorteadoMascara)
-            ehVacinado = verificarChance(probabilidade.probabilidadeVacinado, numeroSorteadoVacinado)
+            temMascara = verificarChance(probabilidade.probabilidadeMascara)
+            ehVacinado = verificarChance(probabilidade.probabilidadeVacinado)
 
             estado = ehVacinado ? ESTADO.VACINADO 
             : temMascara ? ESTADO.COM_MASCARA
@@ -94,7 +92,7 @@ export function reiniciarGrid() {
     }
 
     grid = setupGrid();
-    gridCopia = structuredClone(grid);
+    copiarMatriz(grid, gridCopia);
 }
 
 export function toggleSimulacao() {
