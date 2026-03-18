@@ -6,13 +6,22 @@ export const GRID_WIDTH = 1000
 export const GRID_HEIGHT = 1000
 
 export const LIGHT_GREY = [220]
-export const DARK_GREY = [180]
+export const BLUE = [173, 216, 230]
 export const WHITE = [255]
 export const BLACK = [0]
-export const PROBABILIDADE_INFECCAO = 0.5;
-export const PROBABILIDADE_INFECCAO_MASCARA = 0.1;
-export const MS_ENTRE_RODADAS = 3000;
+export const YELLOW = [255, 237, 41]
+export const PROBABILIDADE_INFECCAO = 0.2;
+export const PROBABILIDADE_INFECCAO_MASCARA = 0.05;
+export const MS_ENTRE_RODADAS = 500;
 export const PROBABILIDADE_DE_MASCARA = 0.05
+export const PROBABILIDADE_DE_VACINADO = 0.01
+
+export const ESTADO = Object.freeze({
+    NAO_INFECTADO: 0,
+    INFECTADO: 1,
+    COM_MASCARA: 2,
+    VACINADO: 3,
+}) 
 
 export let grid = setupGrid()
 export let gridCopia = structuredClone(grid)
@@ -22,8 +31,8 @@ export let colunas = GRID_WIDTH / CELL_SIZE;
 
 function setupGrid() {
 
-    let numeroSorteadoMascara;
-    let temMascara;
+    let numeroSorteadoMascara, numeroSorteadoVacinado;
+    let temMascara, ehVacinado;
     let estado;
 
     /**
@@ -33,9 +42,16 @@ function setupGrid() {
     for (let i = 0; i < GRID_WIDTH; i++) {
         grid[i] = []
         for (let j = 0; j < GRID_HEIGHT; j++) {
-            numeroSorteadoMascara = Math.random()
+            numeroSorteadoMascara = Math.random();
+            numeroSorteadoVacinado = Math.random();
+
             temMascara = verificarChance(PROBABILIDADE_DE_MASCARA, numeroSorteadoMascara)
-            estado = temMascara ? 2 : 0
+            ehVacinado = verificarChance(PROBABILIDADE_DE_VACINADO, numeroSorteadoVacinado)
+
+            estado = ehVacinado ? ESTADO.VACINADO 
+            : temMascara ? ESTADO.COM_MASCARA
+            : ESTADO.NAO_INFECTADO
+            
             grid[i][j] = estado
 
         }
@@ -43,4 +59,3 @@ function setupGrid() {
 
     return grid
 }
-
