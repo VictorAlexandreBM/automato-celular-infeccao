@@ -6,9 +6,6 @@
     <title>automato-celular</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        #botao-ligar {
-            margin-bottom: 30px;
-        }
     </style>
 </head>
 <body>
@@ -17,10 +14,73 @@
 <h1>Autômato celular</h1>
 </div>
     <div id="canvas-container"></div> 
-<button id="botao-ligar">
-    Iniciar Simulação
-</button>
+<div>
+    <button id="botao-ligar" class="botao">
+        Iniciar Simulação
+    </button>
+    <button id="botao-reiniciar" class="botao">
+        Reiniciar
+    </button>
+    <div class="container-parametrizacoes">
+        <div>
+            <h1>Estado Selecionado para inserção</h1>    
+        </div>
+        <div class="container-insercao">
 
+            <button id="botao-insercao-0" class="botao botao-insercao">
+                <span class="botao-insercao-texto">Não infectada</span>
+                <div id="quadrado-0" class="quadrado-0 quadrado"></div>
+            </button>
+
+            <button id="botao-insercao-1" class="botao botao-insercao">
+                <span class="botao-insercao-texto">Infectada</span>
+                <div id="quadrado-1" class="quadrado-1 quadrado"></div>
+            </button>
+
+            <button id="botao-insercao-2" class="botao botao-insercao">
+                <span class="botao-insercao-texto">Vacinada</span>
+                <div id="quadrado-2" class="quadrado-2 quadrado"></div>
+            </button>
+
+            <button id="botao-insercao-3" class="botao botao-insercao">
+                <span class="botao-insercao-texto">Com Máscara</span>
+                <div id="quadrado-3" class="quadrado-3 quadrado"></div>
+            </button>
+
+        
+        </div>
+
+        <div>
+            <h1>Parâmetros de Infecção</h1>
+
+            <div>
+                <label for="input-infeccao-mascara">Probabilidade de infecção de pessoas com máscara</label>
+                <input id="input-infeccao-mascara"/>
+            </div>
+
+            <div>
+                <label for="input-infeccao">Probabilidade de infecção de pessoas</label>
+                <input id="input-infeccao"/>
+            </div>
+        </div>
+
+        <div>
+            <h1>Parâmetros de Inicialização</h1>
+
+            <div>
+                <label for="input-mascara">Probabilidade de um quadrado ser uma pessoa com máscara</label>
+                <input id="input-mascara"/>
+            </div>
+
+            <div>
+                <label for="input-vacinada">Probabilidade de um quadrado ser uma pessoa vacinada</label>
+                <input id="input-vacinada"/>
+            </div>
+        </div>
+    </div>
+   
+</div>
+    
 </body>
     <script type="module" src="js/interface.js"></script>
     <script type="module" src="js/main.js"></script>

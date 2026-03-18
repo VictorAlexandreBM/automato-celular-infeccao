@@ -1,5 +1,5 @@
 
-import { BLACK, CELL_SIZE, colunas, BLUE, grid, GRID_HEIGHT, GRID_WIDTH, LIGHT_GREY, linhas, WHITE, ESTADO, YELLOW } from './configs.js';
+import { RED, CELL_SIZE, colunas, BLUE, grid, GRID_HEIGHT, GRID_WIDTH, LIGHT_GREY, linhas, WHITE, ESTADO, YELLOW, configuracoesAplicacao} from './configs.js';
 import p5 from './lib/p5.esm.min.js';
 
 // @ts-ignore
@@ -16,15 +16,15 @@ new p5((p) => {
 
         console.log(colunas, i, linhas, j)
         if (i >= 0 && i < colunas && j >= 0 && j < linhas){
-        grid[i][j] = 1
+        grid[i][j] = configuracoesAplicacao.clickEstado;
 
         console.log(grid[i][j])
         }
     }
 
     p.draw = () => {
-        p.background(...BLUE);      
-        p.stroke(...LIGHT_GREY);  
+        p.background(BLUE);      
+        p.stroke(LIGHT_GREY);  
 
         for (let i = 0; i < linhas; i++) {
             for (let j = 0; j < colunas; j++) {
@@ -33,19 +33,19 @@ new p5((p) => {
 
             switch(grid[i][j]) {
                 case ESTADO.NAO_INFECTADO: 
-                    p.fill(...WHITE);
+                    p.fill(WHITE);
                     break;
                 case ESTADO.INFECTADO:
-                    p.fill(...BLACK);
+                    p.fill(RED);
                     break;
                 case ESTADO.COM_MASCARA:
-                    p.fill(...BLUE);
+                    p.fill(BLUE);
                     break;
                 case ESTADO.VACINADO:
-                    p.fill(...YELLOW);
+                    p.fill(YELLOW);
                     break;
                 default:
-                    p.fill(...WHITE);
+                    p.fill(WHITE);
             }
 
             p.stroke(200);

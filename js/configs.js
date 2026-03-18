@@ -8,13 +8,21 @@ export const GRID_HEIGHT = 1000
 export const LIGHT_GREY = [220]
 export const BLUE = [173, 216, 230]
 export const WHITE = [255]
-export const BLACK = [0]
+export const RED = [220, 20, 60]
 export const YELLOW = [255, 237, 41]
-export const PROBABILIDADE_INFECCAO = 0.2;
-export const PROBABILIDADE_INFECCAO_MASCARA = 0.05;
 export const MS_ENTRE_RODADAS = 500;
-export const PROBABILIDADE_DE_MASCARA = 0.05
-export const PROBABILIDADE_DE_VACINADO = 0.01
+
+export const configuracoesAplicacao = {
+    clickEstado: 1
+}
+
+export const probabilidade = {
+    probabilidadeMascara: 0.05,
+    probabilidadeVacinado: 0.01,
+    probabilidadeInfeccao: 0.3,
+    probabilidadeInfeccaoMascara: 0.1,
+    probabilidadeInfeccaoVacinado: 0.0
+}
 
 export const ESTADO = Object.freeze({
     NAO_INFECTADO: 0,
@@ -45,8 +53,8 @@ function setupGrid() {
             numeroSorteadoMascara = Math.random();
             numeroSorteadoVacinado = Math.random();
 
-            temMascara = verificarChance(PROBABILIDADE_DE_MASCARA, numeroSorteadoMascara)
-            ehVacinado = verificarChance(PROBABILIDADE_DE_VACINADO, numeroSorteadoVacinado)
+            temMascara = verificarChance(probabilidade.probabilidadeMascara, numeroSorteadoMascara)
+            ehVacinado = verificarChance(probabilidade.probabilidadeVacinado, numeroSorteadoVacinado)
 
             estado = ehVacinado ? ESTADO.VACINADO 
             : temMascara ? ESTADO.COM_MASCARA
@@ -58,4 +66,9 @@ function setupGrid() {
     }
 
     return grid
+}
+
+export function reiniciarGrid() {
+    grid = setupGrid();
+    gridCopia = structuredClone(grid);
 }

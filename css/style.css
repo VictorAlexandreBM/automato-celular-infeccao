@@ -15,21 +15,82 @@ body {
 
 /* Estilo base do botão */
 #botao-ligar {
+    background-color: #2ecc71; /* Verde (Iniciar) */
+    margin-bottom: 30px;
+}
+
+#botao-reiniciar {
+    background-color: #99a034;
+}
+
+.botao {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    background-color: #2ecc71; /* Verde (Iniciar) */
     color: white;
 }
+
+.container-insercao{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 60%;
+}
+
+.botao-insercao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #000;
+}
+
+.selecionado, .botao-insercao:hover {
+    background-color: #242323;
+}
+
+
+.botao-insercao-texto {
+  margin-bottom: 5px;  
+  font-family: sans-serif;
+}
+
+
+.quadrado {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+}
+
+.quadrado-0 {
+  background-color: rgb(255, 255, 255); 
+}
+
+.quadrado-1 {
+  background-color: rgb(220, 20, 60); 
+}
+
+.quadrado-2 {
+  background-color: rgb(173, 216, 230); 
+}
+
+.quadrado-3 {
+  background-color: rgb(255, 237, 41); 
+}
+
+
 
 /* Estado quando a simulação está rodando */
 #botao-ligar.ativo {
     background-color: #e74c3c; /* Vermelho (Parar) */
 }
 
-#botao-ligar:hover {
+.botao:hover {
     filter: brightness(1.1);
+}
+
+label {
+    display: block
 }

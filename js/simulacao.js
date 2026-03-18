@@ -1,5 +1,5 @@
 "use strict";
-import { colunas, grid, gridCopia, linhas, MS_ENTRE_RODADAS, PROBABILIDADE_INFECCAO, PROBABILIDADE_INFECCAO_MASCARA, ESTADO } from "./configs.js";
+import { colunas, grid, gridCopia, linhas, MS_ENTRE_RODADAS, ESTADO, probabilidade } from "./configs.js";
 import { verificarChance, copiarGrid } from "./utils.js";
 let simulacaoHandler = null; 
 
@@ -77,7 +77,7 @@ function retornarEstadoInfeccao(quantidadeInfectados, estadoAtual){
     
     if (estadoAtual == ESTADO.VACINADO) return estadoAtual;
 
-    const probabilidadeInfeccao = estadoAtual === ESTADO.NAO_INFECTADO ? PROBABILIDADE_INFECCAO : PROBABILIDADE_INFECCAO_MASCARA
+    const probabilidadeInfeccao = estadoAtual === ESTADO.NAO_INFECTADO ? probabilidade.probabilidadeInfeccao : probabilidade.probabilidadeInfeccaoMascara
 
     for (let i = 0; i < quantidadeInfectados; i++) {
         numeroSorteado = Math.random()
