@@ -1,35 +1,40 @@
 
-import { RED, CELL_SIZE, colunas, BLUE, grid, GRID_HEIGHT, GRID_WIDTH, LIGHT_GREY, linhas, WHITE, ESTADO, YELLOW, configuracoesAplicacao} from './configs.js';
+import { RED, BLUE, grid, LIGHT_GREY, WHITE, ESTADO, YELLOW, configuracoesAplicacao, configuracoesGrid, simulacaoLigada} from './configs.js';
 import p5 from './lib/p5.esm.min.js';
 
 // @ts-ignore
-new p5((p) => {
+export const canva = new p5((p) => {
     p.setup = () => {
         
-        let cnv = p.createCanvas(GRID_WIDTH, GRID_HEIGHT);
+        let cnv = p.createCanvas(configuracoesGrid.largura, configuracoesGrid.altura);
         cnv.parent('canvas-container');
     }
 
     p.mouseClicked = () => {
-        let i = p.floor(p.mouseX / CELL_SIZE);
-        let j = p.floor(p.mouseY / CELL_SIZE);
+        if (!simulacaoLigada){
+            let i = p.floor(p.mouseX / configuracoesGrid.tamanhoCelula);
+            let j = p.floor(p.mouseY / configuracoesGrid.tamanhoCelula);
+            
+            console.log(configuracoesGrid.colunas, i, configuracoesGrid.linhas, j)
+            if (i >= 0 && i < configuracoesGrid.colunas && j >= 0 && j < configuracoesGrid.linhas){
+            grid[i][j] = configuracoesAplicacao.clickEstado;
 
-        console.log(colunas, i, linhas, j)
-        if (i >= 0 && i < colunas && j >= 0 && j < linhas){
-        grid[i][j] = configuracoesAplicacao.clickEstado;
-
-        console.log(grid[i][j])
+            console.log(grid[i][j])
+            }
         }
+
+        
     }
+
 
     p.draw = () => {
         p.background(BLUE);      
         p.stroke(LIGHT_GREY);  
 
-        for (let i = 0; i < linhas; i++) {
-            for (let j = 0; j < colunas; j++) {
-                let x = i * CELL_SIZE
-                let y = j * CELL_SIZE
+        for (let i = 0; i < configuracoesGrid.colunas; i++) {
+            for (let j = 0; j < configuracoesGrid.linhas; j++) {
+                let x = i * configuracoesGrid.tamanhoCelula
+                let y = j * configuracoesGrid.tamanhoCelula
 
             switch(grid[i][j]) {
                 case ESTADO.NAO_INFECTADO: 
@@ -50,9 +55,11 @@ new p5((p) => {
 
             p.stroke(200);
 
-            p.rect(x, y, CELL_SIZE, CELL_SIZE);
+            p.rect(x, y, configuracoesGrid.tamanhoCelula, configuracoesGrid.tamanhoCelula);
             }
         }
     }
+
+    
 
 })

@@ -19,6 +19,12 @@ body {
     margin-bottom: 30px;
 }
 
+#canvas-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
 #botao-reiniciar {
     background-color: #99a034;
 }
@@ -33,11 +39,26 @@ body {
     color: white;
 }
 
-.container-insercao{
+.container-insercao, .container-infeccao, .container-inicializacao{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
-    width: 60%;
+    width: 100%;
+}
+
+.container-parametrizacoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container-parametrizacoes section {
+   margin-top: 20px;
+   padding: 20px 20px
 }
 
 .botao-insercao {

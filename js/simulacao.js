@@ -1,15 +1,15 @@
 "use strict";
-import { colunas, grid, gridCopia, linhas, MS_ENTRE_RODADAS, ESTADO, probabilidade } from "./configs.js";
+import {grid, gridCopia, configuracoesGrid, configuracoesAplicacao, ESTADO, probabilidade } from "./configs.js";
 import { verificarChance, copiarGrid } from "./utils.js";
 let simulacaoHandler = null; 
 
 function iniciarSimulacao(){
     let quantidadeCelulasDoente = 0;
-
+    console.log(configuracoesAplicacao.msEntreRodadas)
     return setInterval(() => {
         console.log('inicio')
-        for (let i = 0; i < linhas; i++) {
-            for (let j = 0; j < colunas; j++) {
+        for (let i = 0; i < configuracoesGrid.colunas; i++) {
+            for (let j = 0; j < configuracoesGrid.linhas; j++) {
                 if (grid[i][j] === ESTADO.NAO_INFECTADO || grid[i][j] === ESTADO.COM_MASCARA) {
 
                     quantidadeCelulasDoente = verificarCelulasAoRedor(i, j)
@@ -24,7 +24,7 @@ function iniciarSimulacao(){
         copiarGrid(gridCopia, grid)
 
         console.log('fim')
-    }, MS_ENTRE_RODADAS);
+    }, configuracoesAplicacao.msEntreRodadas);
 
 }
 
@@ -54,7 +54,7 @@ function verificarCelulasAoRedor(x, y) {
     for (let i = xVizinho; i < x+2; i++) {
         for (let j = yVizinho; j < y+2; j++) {
             ehMesmaCelula = i === x && j === y;
-            estaDentroDosLimites = j >= 0 && j < colunas && i >= 0 && i < linhas;
+            estaDentroDosLimites = i >= 0 && i < configuracoesGrid.colunas && j >= 0 && j < configuracoesGrid.linhas;            
             celulaEstaInfectada = estaDentroDosLimites && grid[i][j] === ESTADO.INFECTADO;
             
             if (celulaEstaInfectada && !ehMesmaCelula) {

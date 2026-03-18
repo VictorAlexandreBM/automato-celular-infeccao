@@ -1,4 +1,4 @@
-import { reiniciarGrid, probabilidade, configuracoesAplicacao } from "./configs.js";
+import { reiniciarGrid, probabilidade, configuracoesAplicacao, configuracoesGrid, atualizarColunas, atualizarLinhas, toggleSimulacao, simulacaoLigada } from "./configs.js";
 import { gerenciarSimulacao } from "./simulacao.js";
 
 const botaoLigar = document.getElementById('botao-ligar');
@@ -7,19 +7,29 @@ const inputInfeccaoMascara = document.getElementById('input-infeccao-mascara');
 const inputInfeccao = document.getElementById('input-infeccao');
 const inputMascara = document.getElementById('input-mascara');
 const inputVacinada = document.getElementById('input-vacinada');
+const inputInfeccaoMs = document.getElementById('input-infeccao-ms');
+const todosInputs = document.querySelectorAll('input');
+const inputColunas = document.getElementById('input-colunas');
+const inputLinhas = document.getElementById('input-linhas');
+const inputCelulas = document.getElementById('input-celulas');
+
 const botoesInsercoes= document.querySelectorAll('.botao-insercao');
 const containerInsercao = document.querySelector('.container-insercao');
-let simulacaoLigada = false;
+
 
 botaoLigar.addEventListener('click', () => {
-    simulacaoLigada = !simulacaoLigada;
+    toggleSimulacao();
 
     if (simulacaoLigada) {
         botaoLigar.textContent = "Parar Simulação";
         botaoLigar.classList.add('ativo');
+
+        alternarEstadoElementos(true);
     } else {
         botaoLigar.textContent = "Iniciar Simulação";
         botaoLigar.classList.remove('ativo');
+
+        alternarEstadoElementos(false);
     }
 
     gerenciarSimulacao(simulacaoLigada);
@@ -34,22 +44,42 @@ document.addEventListener('DOMContentLoaded', () => {
     inputInfeccaoMascara.value = probabilidade.probabilidadeInfeccaoMascara;
     inputMascara.value = probabilidade.probabilidadeMascara;
     inputVacinada.value = probabilidade.probabilidadeVacinado;
+    inputInfeccaoMs.value = configuracoesAplicacao.msEntreRodadas;
+    inputColunas.value = configuracoesGrid.colunas;
+    inputLinhas.value = configuracoesGrid.linhas;
+    inputCelulas.value = configuracoesGrid.tamanhoCelula;
 });
 
 inputInfeccao.addEventListener('blur', () => {
-    probabilidade.probabilidadeInfeccao = inputInfeccao.value
+    probabilidade.probabilidadeInfeccao = Number(inputInfeccao.value)
 })
 
 inputInfeccaoMascara.addEventListener('blur', () => {
-    probabilidade.probabilidadeInfeccaoMascara = inputInfeccaoMascara.value
+    probabilidade.probabilidadeInfeccaoMascara = Number(inputInfeccaoMascara.value)
 })
 
 inputMascara.addEventListener('blur', () => {
-    probabilidade.probabilidadeMascara = inputMascara.value
+    probabilidade.probabilidadeMascara = Number(inputMascara.value)
 })
 
 inputVacinada.addEventListener('blur', () => {
-    probabilidade.probabilidadeVacinado = inputVacinada.value
+    probabilidade.probabilidadeVacinado = Number(inputVacinada.value)
+})
+
+inputInfeccaoMs.addEventListener('blur', () => {
+    configuracoesAplicacao.msEntreRodadas = Number(inputInfeccaoMs.value)
+})
+
+inputColunas.addEventListener('blur', () => {
+    configuracoesGrid.colunasFuturas = Number(inputColunas.value);
+})
+
+inputLinhas.addEventListener('blur', () => {
+    configuracoesGrid.linhasFuturas = Number(inputLinhas.value);
+})
+
+inputCelulas.addEventListener('blur', () => {
+    configuracoesGrid.tamanhoCelulaFuturo = Number(inputCelulas.value)
 })
 
 containerInsercao.addEventListener('click', (e) => {
@@ -71,3 +101,15 @@ containerInsercao.addEventListener('click', (e) => {
 
     }
 })
+
+function alternarEstadoElementos(desativar) {
+    todosInputs.forEach(input => {
+        input.disabled = desativar;
+    });
+
+    botoesInsercoes.forEach(botao => {
+        botao.disabled = desativar;
+    });
+
+    botaoReiniciar.disabled = desativar;
+}

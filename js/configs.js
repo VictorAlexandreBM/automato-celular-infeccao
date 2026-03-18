@@ -1,19 +1,36 @@
 import { verificarChance } from "./utils.js"
-
-
-export const CELL_SIZE = 10
-export const GRID_WIDTH = 1000
-export const GRID_HEIGHT = 1000
+import { canva } from "./main.js"
 
 export const LIGHT_GREY = [220]
 export const BLUE = [173, 216, 230]
 export const WHITE = [255]
 export const RED = [220, 20, 60]
 export const YELLOW = [255, 237, 41]
-export const MS_ENTRE_RODADAS = 500;
-
+export let simulacaoLigada = false;
 export const configuracoesAplicacao = {
-    clickEstado: 1
+    clickEstado: 1,
+    msEntreRodadas: 500
+}
+
+export const configuracoesGrid = {
+    tamanhoCelula: 20,
+    linhas: 50,
+    colunas: 50,
+    largura: 20 * 50,
+    altura: 20 * 50, 
+    linhasFuturas: 50,
+    colunasFuturas: 50,
+    tamanhoCelulaFuturo: 20,
+}
+
+export const atualizarLinhas = (linhas) => {
+    configuracoesGrid.linhas = linhas
+    configuracoesGrid.altura = linhas * configuracoesGrid.tamanhoCelula
+}
+
+export const atualizarColunas = (colunas) => {
+    configuracoesGrid.colunas = colunas
+    configuracoesGrid.largura = colunas * configuracoesGrid.tamanhoCelula
 }
 
 export const probabilidade = {
@@ -34,11 +51,8 @@ export const ESTADO = Object.freeze({
 export let grid = setupGrid()
 export let gridCopia = structuredClone(grid)
 
-export const linhas = GRID_HEIGHT / CELL_SIZE;
-export let colunas = GRID_WIDTH / CELL_SIZE;
-
 function setupGrid() {
-
+    console.log(configuracoesGrid)
     let numeroSorteadoMascara, numeroSorteadoVacinado;
     let temMascara, ehVacinado;
     let estado;
@@ -47,9 +61,9 @@ function setupGrid() {
      * @type {number[][]}
      */
     const grid = []
-    for (let i = 0; i < GRID_WIDTH; i++) {
+    for (let i = 0; i < configuracoesGrid.colunas; i++) {
         grid[i] = []
-        for (let j = 0; j < GRID_HEIGHT; j++) {
+        for (let j = 0; j < configuracoesGrid.linhas; j++) {
             numeroSorteadoMascara = Math.random();
             numeroSorteadoVacinado = Math.random();
 
@@ -69,6 +83,20 @@ function setupGrid() {
 }
 
 export function reiniciarGrid() {
+
+    if (configuracoesGrid.linhas !== configuracoesGrid.linhasFuturas || 
+        configuracoesGrid.colunas !== configuracoesGrid.colunasFuturas || 
+        configuracoesGrid.tamanhoCelula !== configuracoesGrid.tamanhoCelulaFuturo){
+        configuracoesGrid.tamanhoCelula = configuracoesGrid.tamanhoCelulaFuturo    
+        atualizarLinhas(configuracoesGrid.linhasFuturas)
+        atualizarColunas(configuracoesGrid.colunasFuturas)
+        canva.resizeCanvas(configuracoesGrid.largura, configuracoesGrid.altura);
+    }
+
     grid = setupGrid();
     gridCopia = structuredClone(grid);
+}
+
+export function toggleSimulacao() {
+    simulacaoLigada = !simulacaoLigada
 }
