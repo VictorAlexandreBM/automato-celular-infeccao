@@ -1,6 +1,6 @@
 
-import p5 from '../node_modules/p5/lib/p5.esm.js';
 import { BLACK, CELL_SIZE, colunas, DARK_GREY, grid, GRID_HEIGHT, GRID_WIDTH, LIGHT_GREY, linhas, WHITE } from './configs.js';
+import p5 from './lib/p5.esm.min.js';
 
 // @ts-ignore
 new p5((p) => {
