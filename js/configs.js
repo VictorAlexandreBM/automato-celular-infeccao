@@ -1,9 +1,9 @@
 import { verificarChance } from "./utils.js"
 
 
-export const CELL_SIZE = 5
-export const GRID_WIDTH = 400
-export const GRID_HEIGHT = 400
+export const CELL_SIZE = 10
+export const GRID_WIDTH = 1000
+export const GRID_HEIGHT = 1000
 
 export const LIGHT_GREY = [220]
 export const DARK_GREY = [180]
