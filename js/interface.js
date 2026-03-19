@@ -1,5 +1,7 @@
-import { reiniciarGrid, probabilidade, configuracoesAplicacao, configuracoesGrid, atualizarColunas, atualizarLinhas, toggleSimulacao, simulacaoLigada } from "./configs.js";
-import { gerenciarSimulacao } from "./simulacao.js";
+import {probabilidade, configuracoesAplicacao, configuracoesGrid} from "./configs.js";
+import {resetarEstado} from "./estado.js";
+import {atualizarTamanhoCanvas} from "./main.js";
+import {gerenciarMotor} from "./orquestrador.js";
 
 const botaoLigar = document.getElementById('botao-ligar');
 const botaoReiniciar = document.getElementById('botao-reiniciar');
@@ -13,17 +15,16 @@ const inputColunas = document.getElementById('input-colunas');
 const inputLinhas = document.getElementById('input-linhas');
 const inputCelulas = document.getElementById('input-celulas');
 
-const botoesInsercoes= document.querySelectorAll('.botao-insercao');
+const botoesInsercoes = document.querySelectorAll('.botao-insercao');
 const containerInsercao = document.querySelector('.container-insercao');
 
 
 botaoLigar.addEventListener('click', () => {
-    toggleSimulacao();
+    const estaRodando = gerenciarMotor();
 
-    if (simulacaoLigada) {
+    if (estaRodando) {
         botaoLigar.textContent = "Parar Simulação";
         botaoLigar.classList.add('ativo');
-
         alternarEstadoElementos(true);
     } else {
         botaoLigar.textContent = "Iniciar Simulação";
@@ -32,11 +33,11 @@ botaoLigar.addEventListener('click', () => {
         alternarEstadoElementos(false);
     }
 
-    gerenciarSimulacao(simulacaoLigada);
 });
 
 botaoReiniciar.addEventListener('click', () => {
-    reiniciarGrid();
+    resetarEstado();
+    atualizarTamanhoCanvas();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -87,13 +88,13 @@ containerInsercao.addEventListener('click', (e) => {
     let estadoBotao;
     let botoesInsercao;
 
-    if (e.target.classList.contains('botao-insercao')){
+    if (e.target.classList.contains('botao-insercao')) {
         botao = e.target
         estadoBotao = Number(botao.id.split('-')[2])
         configuracoesAplicacao.clickEstado = estadoBotao
 
         botoesInsercao = e.currentTarget.querySelectorAll('.botao-insercao')
-        for(botao of botoesInsercao) {
+        for (botao of botoesInsercao) {
             botao.classList.remove('selecionado')
         }
 

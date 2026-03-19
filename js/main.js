@@ -1,65 +1,49 @@
 
-import { RED, BLUE, grid, LIGHT_GREY, WHITE, ESTADO, YELLOW, configuracoesAplicacao, configuracoesGrid, simulacaoLigada} from './configs.js';
+import {
+    configuracoesAplicacao, configuracoesGrid, CORES,
+    MAPA_CORES
+} from './configs.js';
 import p5 from './lib/p5.esm.min.js';
+import {estaLigada, inserirCelula, obterGrid} from "./estado.js";
 
 // @ts-ignore
 export const canva = new p5((p) => {
     p.setup = () => {
-        
         let cnv = p.createCanvas(configuracoesGrid.largura, configuracoesGrid.altura);
         cnv.parent('canvas-container');
     }
 
     p.mouseClicked = () => {
-        if (!simulacaoLigada){
+        if (!estaLigada()){
             let i = p.floor(p.mouseX / configuracoesGrid.tamanhoCelula);
             let j = p.floor(p.mouseY / configuracoesGrid.tamanhoCelula);
-            
-            console.log(configuracoesGrid.colunas, i, configuracoesGrid.linhas, j)
-            if (i >= 0 && i < configuracoesGrid.colunas && j >= 0 && j < configuracoesGrid.linhas){
-            grid[i][j] = configuracoesAplicacao.clickEstado;
 
-            console.log(grid[i][j])
-            }
+            inserirCelula(i, j, configuracoesAplicacao.clickEstado)
         }
-
-        
     }
 
-
     p.draw = () => {
-        p.background(BLUE);      
-        p.stroke(LIGHT_GREY);  
+        p.background(CORES.BLUE);
+        p.stroke(CORES.LIGHT_GREY);
+
+        const gridAtual = obterGrid();
 
         for (let i = 0; i < configuracoesGrid.colunas; i++) {
             for (let j = 0; j < configuracoesGrid.linhas; j++) {
                 let x = i * configuracoesGrid.tamanhoCelula
                 let y = j * configuracoesGrid.tamanhoCelula
 
-            switch(grid[i][j]) {
-                case ESTADO.NAO_INFECTADO: 
-                    p.fill(WHITE);
-                    break;
-                case ESTADO.INFECTADO:
-                    p.fill(RED);
-                    break;
-                case ESTADO.COM_MASCARA:
-                    p.fill(BLUE);
-                    break;
-                case ESTADO.VACINADO:
-                    p.fill(YELLOW);
-                    break;
-                default:
-                    p.fill(WHITE);
-            }
+                const estadoAtual = gridAtual[i][j];
+                const cor = MAPA_CORES[estadoAtual] || CORES.WHITE;
+                p.fill(cor)
+                p.stroke(200);
 
-            p.stroke(200);
-
-            p.rect(x, y, configuracoesGrid.tamanhoCelula, configuracoesGrid.tamanhoCelula);
+                p.rect(x, y, configuracoesGrid.tamanhoCelula, configuracoesGrid.tamanhoCelula);
             }
         }
     }
-
-    
-
 })
+
+export function atualizarTamanhoCanvas() {
+    canva.resizeCanvas(configuracoesGrid.largura, configuracoesGrid.altura)
+}
