@@ -1,5 +1,3 @@
-// 1. CONSTANTES IMUTÁVEIS (Uso de Object.freeze previne alterações acidentais)
-
 export const CORES = Object.freeze({
     LIGHT_GREY: [220],
     BLUE: [173, 216, 230],
@@ -15,7 +13,6 @@ export const ESTADO = Object.freeze({
     VACINADO: 3,
 });
 
-// 2. CONFIGURAÇÕES INICIAIS (Podem ser alteradas pela interface)
 export const configuracoesAplicacao = {
     clickEstado: ESTADO.INFECTADO,
     msEntreRodadas: 500
