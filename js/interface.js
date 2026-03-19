@@ -1,5 +1,5 @@
 import {probabilidade, configuracoesAplicacao, configuracoesGrid} from "./configs.js";
-import {resetarEstado} from "./estado.js";
+import {atualizarTempoSimulado, resetarEstado} from "./estado.js";
 import {atualizarTamanhoCanvas} from "./main.js";
 import {gerenciarMotor} from "./orquestrador.js";
 
@@ -15,11 +15,29 @@ const inputColunas = document.getElementById('input-colunas');
 const inputLinhas = document.getElementById('input-linhas');
 const inputCelulas = document.getElementById('input-celulas');
 const displayRodada = document.getElementById('display-rodada');
+const displayTempoDecorrido = document.getElementById('display-tempo-decorrido');
+const displayTempoSimulado = document.getElementById('display-tempo-decorrido-simulado');
 const botoesInsercoes = document.querySelectorAll('.botao-insercao');
 const containerInsercao = document.querySelector('.container-insercao');
+const grupoInputsTempo = document.querySelector('.inputs-tempo');
 
-document.addEventListener('rodadaAtualizada', (e) => {
+const inputAnos = document.getElementById("input-infeccao-anos") || 0;
+const inputMeses = document.getElementById("input-infeccao-meses") || 0;
+const inputDias = document.getElementById("input-infeccao-dias")|| 0;
+const inputHoras = document.getElementById("input-infeccao-horas")|| 0;
+const inputMinutos = document.getElementById("input-infeccao-minutos")|| 0;
+const inputSegundos = document.getElementById("input-infeccao-segundos") || 0;
+
+window.addEventListener('timerAtualizado', (e) => {
+    displayTempoDecorrido.textContent = `Tempo Decorrido: ${e.detail.texto}`;
+})
+
+window.addEventListener('rodadaAtualizada', (e) => {
     displayRodada.textContent = `Rodada Atual: ${e.detail.rodada}`;
+})
+
+window.addEventListener('timerSimuladoAtualizado', (e) => {
+    displayTempoSimulado.textContent = `Tempo Decorrido Simulado: ${e.detail.texto}`;
 })
 
 botaoLigar.addEventListener('click', () => {
@@ -104,6 +122,26 @@ containerInsercao.addEventListener('click', (e) => {
         e.target.classList.add('selecionado')
 
     }
+})
+
+grupoInputsTempo.addEventListener('change', () => {
+    const anos = Number(inputAnos.value) || 0;
+    const meses = Number(inputMeses.value) || 0;
+    const dias = Number(inputDias.value) || 0;
+    const horas = Number(inputHoras.value) || 0;
+    const minutos = Number(inputMinutos.value) || 0;
+    const segundos = Number(inputSegundos.value) || 0;
+
+    const totalMs =
+        anos * 365 * 24 * 60 * 60 * 1000 +
+        meses * 30 * 24 * 60 * 60 * 1000 +
+        dias * 24 * 60 * 60 * 1000 +
+        horas * 60 * 60 * 1000 +
+        minutos * 60 * 1000 +
+        segundos * 1000;
+
+    console.log(totalMs)
+    atualizarTempoSimulado(totalMs);
 })
 
 function alternarEstadoElementos(desativar) {

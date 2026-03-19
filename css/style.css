@@ -64,6 +64,10 @@ body {
     margin-top: 20px;
 }
 
+.container-rodadas {
+    flex-direction: column;
+}
+
 .container-parametrizacoes {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -75,6 +79,13 @@ body {
 .container-parametrizacoes section {
    margin-top: 20px;
    padding: 20px 20px
+}
+
+.inputs-tempo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    grid-column: 1 / span 2;
 }
 
 .botao-insercao {
