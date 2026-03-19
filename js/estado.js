@@ -4,9 +4,30 @@ import { setupGrid } from "./simulacao.js";
 let simulacaoLigada = false;
 let grid = setupGrid(configuracoesGrid.colunas, configuracoesGrid.linhas);
 let gridCopia = structuredClone(grid);
+let rodada = 0;
+let tempoDecorrido = 0;
 
 export function obterGrid() {
     return grid;
+}
+
+export function obterRodada() {
+    return rodada;
+}
+
+export function atualizarRodada(novaRodada) {
+    console.log(novaRodada)
+    rodada = novaRodada;
+    const evento = new CustomEvent('rodadaAtualizada', {detail: {rodada: novaRodada}});
+    document.dispatchEvent(evento);
+}
+
+export function atualizarTempoDecorrido(novoTempoDecorrido) {
+    tempoDecorrido = novoTempoDecorrido;
+}
+
+export function obterTempoDecorrido() {
+    return tempoDecorrido;
 }
 
 export function obterGridCopia() {
@@ -39,6 +60,8 @@ export function resetarEstado() {
 
     configuracoesGrid.largura = configuracoesGrid.colunas * configuracoesGrid.tamanhoCelula;
     configuracoesGrid.altura = configuracoesGrid.linhas * configuracoesGrid.tamanhoCelula;
+
+    atualizarRodada(0)
 
     grid = setupGrid(configuracoesGrid.colunas, configuracoesGrid.linhas);
 }

@@ -14,19 +14,21 @@
 </head>
 <body>
     
-<div>
+<div style="margin: 20px 0;">
 <h1>Autômato celular</h1>
 </div>
     <div id="canvas-container"></div> 
 <div>
-    <div>
+    <div class="container-botoes">
         <button id="botao-ligar" class="botao">
             Iniciar Simulação
         </button>
         <button id="botao-reiniciar" class="botao">
             Reiniciar
         </button>
-        
+    </div>
+    <div class="container-rodadas">
+        <h2 id="display-rodada">Rodada Atual: 0</h2>
     </div>
     <div class="container-parametrizacoes">
 
@@ -35,22 +37,22 @@
                 <h1>Estado Selecionado para inserção</h1>    
             </div>
             <button id="botao-insercao-0" class="botao botao-insercao">
-                <span class="botao-insercao-texto">Não infectada</span>
+                <span class="botao-insercao-texto">Não infectado</span>
                 <div id="quadrado-0" class="quadrado-0 quadrado"></div>
             </button>
 
             <button id="botao-insercao-1" class="botao botao-insercao">
-                <span class="botao-insercao-texto">Infectada</span>
+                <span class="botao-insercao-texto">Infectado</span>
                 <div id="quadrado-1" class="quadrado-1 quadrado"></div>
             </button>
 
             <button id="botao-insercao-2" class="botao botao-insercao">
-                <span class="botao-insercao-texto">Vacinada</span>
+                <span class="botao-insercao-texto">Com Máscara</span>
                 <div id="quadrado-2" class="quadrado-2 quadrado"></div>
             </button>
 
             <button id="botao-insercao-3" class="botao botao-insercao">
-                <span class="botao-insercao-texto">Com Máscara</span>
+                <span class="botao-insercao-texto">Vacinado</span>
                 <div id="quadrado-3" class="quadrado-3 quadrado"></div>
             </button>
 
@@ -80,32 +82,33 @@
 
         <section class="container-inicializacao">
             <div style="grid-column: 1 / span 2">
-                <h1>Parâmetros de Inicialização</h1>    
+                <h1>Parâmetros de Inicialização</h1>
+                <h4>Apenas serão efetivados após reinicialização</h4>
             </div>
 
             <div>
                 <label for="input-mascara">Probabilidade de um quadrado ser uma pessoa com máscara</label>
-                <input id="input-mascara" type="number" placeholder="0.1" step="0.1" max="1" min="0"/>
+                <input id="input-mascara" type="number" step="0.1" max="1" min="0"/>
             </div>
 
             <div>
                 <label for="input-vacinada">Probabilidade de um quadrado ser uma pessoa vacinada</label>
-                <input id="input-vacinada" type="number" placeholder="0.1" step="0.1" max="1" min="0"/>
+                <input id="input-vacinada" type="number" step="0.1" max="1" min="0"/>
             </div>
 
             <div>
                 <label for="input-linhas">Quantidade de linhas</label>
-                <input id="input-linhas" type="number" placeholder="20" step="1" max="200" min="1"/>
+                <input id="input-linhas" type="number"step="1" max="200" min="1"/>
             </div>
 
             <div>
                 <label for="input-colunas">Quantidade de colunas</label>
-                <input id="input-colunas" type="number" placeholder="20" step="1" max="200" min="1"/>
+                <input id="input-colunas" type="number" step="1" max="200" min="1"/>
             </div>
 
             <div>
                 <label for="input-celulas">Tamanho das células</label>
-                <input id="input-celulas" type="number" placeholder="20" step="1" max="200" min="1"/>
+                <input id="input-celulas" type="number" step="1" max="200" min="1"/>
             </div>
 
         </section>

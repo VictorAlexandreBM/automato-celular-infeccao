@@ -13,7 +13,7 @@ export const canva = new p5((p) => {
         cnv.parent('canvas-container');
     }
 
-    p.mouseClicked = () => {
+    p.mouseDragged = () => {
         if (!estaLigada()){
             let i = p.floor(p.mouseX / configuracoesGrid.tamanhoCelula);
             let j = p.floor(p.mouseY / configuracoesGrid.tamanhoCelula);
@@ -21,6 +21,12 @@ export const canva = new p5((p) => {
             inserirCelula(i, j, configuracoesAplicacao.clickEstado)
         }
     }
+
+    p.mousePressed = () => {
+        p.mouseDragged();
+    }
+
+
 
     p.draw = () => {
         p.background(CORES.BLUE);

@@ -1,5 +1,5 @@
 import {configuracoesAplicacao, configuracoesGrid} from "./configs.js";
-import {alternarSimulacao, atualizarGrid, obterGrid} from "./estado.js";
+import {alternarSimulacao, atualizarGrid, atualizarRodada, obterGrid, obterRodada} from "./estado.js";
 import {calcularProximaGeracao} from "./simulacao.js";
 
 let intervaloId = null;
@@ -32,6 +32,9 @@ function iniciarLoop() {
                 gridDestino[i][j] = 0;
             }
         }
+
+        atualizarRodada(obterRodada() + 1)
+
         calcularProximaGeracao(gridAtual, gridDestino, colunas, linhas);
 
         atualizarGrid(gridDestino);

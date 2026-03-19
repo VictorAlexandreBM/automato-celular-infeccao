@@ -6,23 +6,30 @@
 
 body {
     display: flex;
-    flex-direction: column; /* Alinha os itens verticalmente */ 
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: #f0f0f0;
 }
 
-/* Estilo base do botão */
 #botao-ligar {
-    background-color: #2ecc71; /* Verde (Iniciar) */
-    margin-bottom: 30px;
+    background-color: #2ecc71;
 }
 
 #canvas-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
+    width: 100%;
+    max-height: 80vh;
+    overflow: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+}
+
+#canvas-container canvas {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #botao-reiniciar {
@@ -46,6 +53,15 @@ body {
     align-items: center;
     gap: 10px;
     width: 100%;
+}
+
+.container-rodadas, .container-botoes  {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .container-parametrizacoes {

@@ -14,10 +14,13 @@ const todosInputs = document.querySelectorAll('input');
 const inputColunas = document.getElementById('input-colunas');
 const inputLinhas = document.getElementById('input-linhas');
 const inputCelulas = document.getElementById('input-celulas');
-
+const displayRodada = document.getElementById('display-rodada');
 const botoesInsercoes = document.querySelectorAll('.botao-insercao');
 const containerInsercao = document.querySelector('.container-insercao');
 
+document.addEventListener('rodadaAtualizada', (e) => {
+    displayRodada.textContent = `Rodada Atual: ${e.detail.rodada}`;
+})
 
 botaoLigar.addEventListener('click', () => {
     const estaRodando = gerenciarMotor();
