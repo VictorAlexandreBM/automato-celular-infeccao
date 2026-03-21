@@ -26,10 +26,7 @@ export const canva = new p5((p) => {
         p.mouseDragged();
     }
 
-
-
     p.draw = () => {
-        p.background(CORES.BLUE);
         p.stroke(CORES.LIGHT_GREY);
 
         const gridAtual = obterGrid();
@@ -42,7 +39,6 @@ export const canva = new p5((p) => {
                 const estadoAtual = gridAtual[i][j];
                 const cor = MAPA_CORES[estadoAtual] || CORES.WHITE;
                 p.fill(cor)
-                p.stroke(200);
 
                 p.rect(x, y, configuracoesGrid.tamanhoCelula, configuracoesGrid.tamanhoCelula);
             }
