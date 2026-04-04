@@ -1,6 +1,5 @@
-import { configuracoesGrid } from "./configs.js";
-import { setupGrid } from "./simulacao.js";
-import {msParaStr, msParaStrAnos} from "./utils.js";
+import {configuracoesGrid, ESTADO, probabilidade} from './configs.js';
+import {msParaStr, msParaStrAnos, verificarChance} from './utils.js';
 
 let simulacaoLigada = false;
 let grid = setupGrid(configuracoesGrid.colunas, configuracoesGrid.linhas);
@@ -76,7 +75,7 @@ export function obterGridCopia() {
     return gridCopia;
 }
 
-export function estaLigada() {
+export function simulacaoEstaLigada() {
     return simulacaoLigada;
 }
 
@@ -84,6 +83,35 @@ export function alternarSimulacao() {
     simulacaoLigada = !simulacaoLigada;
     return simulacaoLigada;
 }
+
+export function setupGrid(colunas, linhas) {
+    let numeroSorteadoMascara, numeroSorteadoVacinado;
+    let temMascara, ehVacinado;
+    let estado;
+
+    /**
+     * @type {number[][]}
+     */
+    const grid = []
+    for (let i = 0; i < colunas; i++) {
+        grid[i] = []
+        for (let j = 0; j < linhas; j++) {
+
+            temMascara = verificarChance(probabilidade.probabilidadeMascara)
+            ehVacinado = verificarChance(probabilidade.probabilidadeVacinado)
+
+            estado = ehVacinado ? ESTADO.VACINADO
+                : temMascara ? ESTADO.COM_MASCARA
+                    : ESTADO.NAO_INFECTADO
+
+            grid[i][j] = estado
+
+        }
+    }
+
+    return grid
+}
+
 
 export function atualizarGrid(novoGrid) {
     grid = novoGrid;

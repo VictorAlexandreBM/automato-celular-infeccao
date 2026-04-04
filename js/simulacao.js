@@ -22,34 +22,6 @@ export function calcularProximaGeracao(gridOrigem, gridDestino, colunas, linhas)
 
 }
 
-export function setupGrid(colunas, linhas) {
-    let numeroSorteadoMascara, numeroSorteadoVacinado;
-    let temMascara, ehVacinado;
-    let estado;
-
-    /**
-     * @type {number[][]}
-     */
-    const grid = []
-    for (let i = 0; i < colunas; i++) {
-        grid[i] = []
-        for (let j = 0; j < linhas; j++) {
-
-            temMascara = verificarChance(probabilidade.probabilidadeMascara)
-            ehVacinado = verificarChance(probabilidade.probabilidadeVacinado)
-
-            estado = ehVacinado ? ESTADO.VACINADO
-                : temMascara ? ESTADO.COM_MASCARA
-                    : ESTADO.NAO_INFECTADO
-
-            grid[i][j] = estado
-
-        }
-    }
-
-    return grid
-}
-
 function verificarCelulasAoRedor(x, y, gridOrigem, colunas, linhas) {
     const xVizinho = x - 1
     const yVizinho = y - 1

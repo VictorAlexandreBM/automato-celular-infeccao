@@ -4,7 +4,7 @@
         MAPA_CORES
     } from './configs.js';
     import p5 from './lib/p5.esm.min.js';
-    import {estaLigada, inserirCelula, obterGrid} from "./estado.js";
+    import {simulacaoEstaLigada, inserirCelula, obterGrid} from "./estado.js";
     // @ts-ignore
     export const canva = new p5((p) => {
         p.setup = () => {
@@ -20,7 +20,7 @@
         }
 
         const interagirComGrid = () => {
-            if (!estaLigada()){
+            if (!simulacaoEstaLigada()){
                 let i = p.floor(p.mouseX / configuracoesGrid.tamanhoCelula);
                 let j = p.floor(p.mouseY / configuracoesGrid.tamanhoCelula);
 
