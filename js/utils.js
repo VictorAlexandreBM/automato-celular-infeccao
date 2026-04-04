@@ -9,11 +9,9 @@ export function verificarChance(chanceDeOcorrer) {
  * @param {number[][]} origem
  * @param {number[][]} destino
  */
-export function copiarMatriz(origem, destino){
+export function copiarArray(origem, destino){
     for (let i = 0; i < origem.length; i++) {
-        for (let j = 0; j < origem[i].length; j++) {
-            destino[i][j] = origem[i][j]
-        }        
+       destino[i] = origem[i];
     }
 }
 
@@ -51,4 +49,8 @@ export function msParaStrAnos(tempoDecorridoMs) {
 
 function pad(n, z = 2) {
     return n.toString().padStart(z, '0');
+}
+
+export function calcularIndice(linha, coluna, quantColunas){
+    return linha * quantColunas + coluna
 }

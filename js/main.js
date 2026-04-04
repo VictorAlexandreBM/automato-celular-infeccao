@@ -5,6 +5,7 @@
     } from './configs.js';
     import p5 from './lib/p5.esm.min.js';
     import {simulacaoEstaLigada, inserirCelula, obterGrid} from "./estado.js";
+    import {calcularIndice} from './utils.js';
     // @ts-ignore
     export const canva = new p5((p) => {
         p.setup = () => {
@@ -20,7 +21,9 @@
         }
 
         const interagirComGrid = () => {
+            console.log(p)
             if (!simulacaoEstaLigada()){
+                console.log(`estou aqui`)
                 let i = p.floor(p.mouseX / configuracoesGrid.tamanhoCelula);
                 let j = p.floor(p.mouseY / configuracoesGrid.tamanhoCelula);
 
@@ -30,15 +33,17 @@
 
         p.draw = () => {
             p.stroke(CORES.LIGHT_GREY);
-
+            let i;
             const gridAtual = obterGrid();
+            console.log(gridAtual[0])
+            for (let l = 0; l < configuracoesGrid.linhas; l++) {
+                for (let c = 0; c < configuracoesGrid.colunas; c++) {
+                    let x = c * configuracoesGrid.tamanhoCelula
+                    let y = l * configuracoesGrid.tamanhoCelula
 
-            for (let i = 0; i < configuracoesGrid.colunas; i++) {
-                for (let j = 0; j < configuracoesGrid.linhas; j++) {
-                    let x = i * configuracoesGrid.tamanhoCelula
-                    let y = j * configuracoesGrid.tamanhoCelula
+                    i = calcularIndice(l, c, configuracoesGrid.colunas);
 
-                    const estadoAtual = gridAtual[i][j];
+                    const estadoAtual = gridAtual[i];
                     const cor = MAPA_CORES[estadoAtual] || CORES.WHITE;
                     p.fill(cor)
 

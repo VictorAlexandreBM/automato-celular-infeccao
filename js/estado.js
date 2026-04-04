@@ -1,5 +1,5 @@
 import {configuracoesGrid, ESTADO, probabilidade} from './configs.js';
-import {msParaStr, msParaStrAnos, verificarChance} from './utils.js';
+import {calcularIndice, msParaStr, msParaStrAnos, verificarChance} from './utils.js';
 
 let simulacaoLigada = false;
 let grid = setupGrid(configuracoesGrid.colunas, configuracoesGrid.linhas);
@@ -88,14 +88,12 @@ export function setupGrid(colunas, linhas) {
     let numeroSorteadoMascara, numeroSorteadoVacinado;
     let temMascara, ehVacinado;
     let estado;
+    let i;
 
-    /**
-     * @type {number[][]}
-     */
-    const grid = []
-    for (let i = 0; i < colunas; i++) {
-        grid[i] = []
-        for (let j = 0; j < linhas; j++) {
+    const grid = new Uint8Array(colunas * linhas)
+    for (let l = 0; l < linhas; l++) {
+        for (let c = 0; c < colunas; c++) {
+            i = calcularIndice(l, c, colunas);
 
             temMascara = verificarChance(probabilidade.probabilidadeMascara)
             ehVacinado = verificarChance(probabilidade.probabilidadeVacinado)
@@ -104,7 +102,7 @@ export function setupGrid(colunas, linhas) {
                 : temMascara ? ESTADO.COM_MASCARA
                     : ESTADO.NAO_INFECTADO
 
-            grid[i][j] = estado
+            grid[i] = estado
 
         }
     }
@@ -119,7 +117,12 @@ export function atualizarGrid(novoGrid) {
 
 export function inserirCelula(x, y, estadoNovo) {
     if (x >= 0 && x < configuracoesGrid.colunas && y >= 0 && y < configuracoesGrid.linhas) {
-        grid[x][y] = estadoNovo;
+        console.log(estadoNovo)
+        console.log(x, y)
+        const i = calcularIndice(y, x, configuracoesGrid.colunas)
+        console.log(i);
+        grid[i] = estadoNovo;
+        console.log(grid[0]);
     }
 }
 

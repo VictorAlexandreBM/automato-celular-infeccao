@@ -47,15 +47,7 @@ function iniciarLoop() {
         const colunas = configuracoesGrid.colunas;
         const linhas = configuracoesGrid.linhas;
 
-        const gridDestino = [];
-
-        for (let i = 0; i < colunas; i++) {
-            gridDestino[i] = [];
-
-            for (let j = 0; j < linhas; j++) {
-                gridDestino[i][j] = 0;
-            }
-        }
+        const gridDestino = new Uint8Array(linhas * colunas);
 
         atualizarRodada(obterRodada() + 1)
 
