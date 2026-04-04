@@ -1,3 +1,5 @@
+import {corParaUint32} from './utils.js';
+
 export const CORES = Object.freeze({
     LIGHT_GREY: [220],
     BLUE: [173, 216, 230],
@@ -38,8 +40,8 @@ export const probabilidade = {
 };
 
 export const MAPA_CORES = {
-    [ESTADO.NAO_INFECTADO]: CORES.WHITE,
-    [ESTADO.INFECTADO]: CORES.RED,
-    [ESTADO.COM_MASCARA]: CORES.BLUE,
-    [ESTADO.VACINADO]: CORES.YELLOW
+    [ESTADO.NAO_INFECTADO]: corParaUint32(CORES.WHITE),
+    [ESTADO.INFECTADO]: corParaUint32(CORES.RED),
+    [ESTADO.COM_MASCARA]: corParaUint32(CORES.BLUE),
+    [ESTADO.VACINADO]: corParaUint32(CORES.YELLOW)
 };

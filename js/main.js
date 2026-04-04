@@ -1,17 +1,13 @@
-
-    import {
-        configuracoesAplicacao, configuracoesGrid, CORES,
-        MAPA_CORES
-    } from './configs.js';
-    import p5 from './lib/p5.esm.min.js';
-    import {simulacaoEstaLigada, inserirCelula, obterGrid} from "./estado.js";
-    import {calcularIndice} from './utils.js';
-    // @ts-ignore
+import {configuracoesAplicacao, configuracoesGrid, CORES, MAPA_CORES} from './configs.js';
+import p5 from './lib/p5.esm.min.js';
+import {inserirCelula, obterGrid, simulacaoEstaLigada} from './estado.js';
+import {calcularIndice, corParaUint32} from './utils.js';
+// @ts-ignore
     export const canva = new p5((p) => {
         p.setup = () => {
             let cnv = p.createCanvas(configuracoesGrid.largura, configuracoesGrid.altura);
             cnv.parent('canvas-container');
-
+            p.pixelDensity(1);
 
             // 2. Acopla os eventos ESTRITAMENTE ao elemento DOM do canvas
             cnv.mousePressed(interagirComGrid);
@@ -32,24 +28,34 @@
         }
 
         p.draw = () => {
-            p.stroke(CORES.LIGHT_GREY);
-            let i;
+            p.loadPixels();
+            const pixels32 = new Uint32Array(p.pixels.buffer);
             const gridAtual = obterGrid();
-            console.log(gridAtual[0])
+
+            const corLinha = corParaUint32(CORES.LIGHT_GREY);
+            const corPadrao = corParaUint32(CORES.WHITE);
+
             for (let l = 0; l < configuracoesGrid.linhas; l++) {
                 for (let c = 0; c < configuracoesGrid.colunas; c++) {
-                    let x = c * configuracoesGrid.tamanhoCelula
-                    let y = l * configuracoesGrid.tamanhoCelula
+                    const iGrid = calcularIndice(l, c, configuracoesGrid.colunas);
+                    const estado = gridAtual[iGrid];
 
-                    i = calcularIndice(l, c, configuracoesGrid.colunas);
+                    // Resolve a cor antes de passar para a função
+                    const corCorpo = MAPA_CORES[estado] || corPadrao;
 
-                    const estadoAtual = gridAtual[i];
-                    const cor = MAPA_CORES[estadoAtual] || CORES.WHITE;
-                    p.fill(cor)
-
-                    p.rect(x, y, configuracoesGrid.tamanhoCelula, configuracoesGrid.tamanhoCelula);
+                    pintarQuadrado(
+                        pixels32,
+                        l,
+                        c,
+                        configuracoesGrid.tamanhoCelula,
+                        configuracoesGrid.largura,
+                        corCorpo,
+                        corLinha
+                    );
                 }
             }
+
+            p.updatePixels();
         }
     })
 
@@ -57,3 +63,24 @@
         canva.resizeCanvas(configuracoesGrid.largura, configuracoesGrid.altura);
 
     }
+
+    function pintarQuadrado(pixels32, l, c, tamanho, larguraCanvas, corCorpo, corBorda) {
+    const xBase = c * tamanho;
+    const yBase = l * tamanho;
+
+    for (let lp = 0; lp < tamanho; lp++) {
+        const yGlobal = yBase + lp;
+        const yOffset = yGlobal * larguraCanvas;
+
+        for (let cp = 0; cp < tamanho; cp++) {
+            const xGlobal = xBase + cp;
+            const iCanvas = xGlobal + yOffset;
+
+            if (lp === 0 || cp === 0) {
+                pixels32[iCanvas] = corBorda;
+            } else {
+                pixels32[iCanvas] = corCorpo;
+            }
+        }
+    }
+}

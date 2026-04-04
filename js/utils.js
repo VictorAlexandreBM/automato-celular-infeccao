@@ -54,3 +54,18 @@ function pad(n, z = 2) {
 export function calcularIndice(linha, coluna, quantColunas){
     return linha * quantColunas + coluna
 }
+
+export function corParaUint32(corArray) {
+    let r, g, b, a = 255;
+
+    if (corArray.length === 1) {
+        r = g = b = corArray[0];
+    } else if (corArray.length === 2) {
+        r = g = b = corArray[0];
+        a = corArray[1];
+    } else if (corArray.length === 3) {
+        [r, g, b] = corArray;
+    }
+
+    return (a << 24) | (b << 16) | (g << 8) | r;
+}
