@@ -1,6 +1,7 @@
 "use strict";
 import {ESTADO, probabilidade} from "./configs.js";
 import {verificarChance, copiarArray, estaDentroDosLimites, calcularIndice} from './utils.js';
+import {canva} from './main.js';
 
 export function calcularProximaGeracao(gridOrigem, gridDestino, colunas, linhas) {
     let quantidadeCelulasDoente = 0;
@@ -20,7 +21,9 @@ export function calcularProximaGeracao(gridOrigem, gridDestino, colunas, linhas)
         }
     }
 
-    copiarArray(gridDestino, gridOrigem)
+    copiarArray(gridDestino, gridOrigem);
+
+    canva.redraw();
 
 }
 

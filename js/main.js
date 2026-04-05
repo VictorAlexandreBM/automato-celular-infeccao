@@ -25,6 +25,7 @@ import {calcularIndice, corParaUint32} from './utils.js';
 
                 inserirCelula(i, j, configuracoesAplicacao.clickEstado);
             }
+            p.redraw()
         }
 
         p.draw = () => {
@@ -54,7 +55,7 @@ import {calcularIndice, corParaUint32} from './utils.js';
                     );
                 }
             }
-
+            p.noLoop();
             p.updatePixels();
         }
     })
