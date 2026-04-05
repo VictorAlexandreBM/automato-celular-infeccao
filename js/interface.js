@@ -140,7 +140,6 @@ grupoInputsTempo.addEventListener('change', () => {
         minutos * 60 * 1000 +
         segundos * 1000;
 
-    console.log(totalMs)
     atualizarTempoSimulado(totalMs);
 })
 

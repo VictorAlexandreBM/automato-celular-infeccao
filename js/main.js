@@ -17,9 +17,7 @@ import {calcularIndice, corParaUint32} from './utils.js';
         }
 
         const interagirComGrid = () => {
-            console.log(p)
             if (!simulacaoEstaLigada()){
-                console.log(`estou aqui`)
                 let i = p.floor(p.mouseX / configuracoesGrid.tamanhoCelula);
                 let j = p.floor(p.mouseY / configuracoesGrid.tamanhoCelula);
 

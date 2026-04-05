@@ -19,7 +19,6 @@ export function obterRodada() {
 }
 
 export function atualizarRodada(novaRodada) {
-    console.log(novaRodada)
     rodada = novaRodada;
     const evento = new CustomEvent('rodadaAtualizada', {detail: {rodada: novaRodada}});
     atualizarTempoSimuladoDecorridoRodada(novaRodada);
@@ -117,12 +116,8 @@ export function atualizarGrid(novoGrid) {
 
 export function inserirCelula(x, y, estadoNovo) {
     if (x >= 0 && x < configuracoesGrid.colunas && y >= 0 && y < configuracoesGrid.linhas) {
-        console.log(estadoNovo)
-        console.log(x, y)
         const i = calcularIndice(y, x, configuracoesGrid.colunas)
-        console.log(i);
         grid[i] = estadoNovo;
-        console.log(grid[0]);
     }
 }
 
