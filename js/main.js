@@ -9,7 +9,6 @@ import {calcularIndice, corParaUint32} from './utils.js';
             cnv.parent('canvas-container');
             p.pixelDensity(1);
 
-            // 2. Acopla os eventos ESTRITAMENTE ao elemento DOM do canvas
             cnv.mousePressed(interagirComGrid);
             cnv.mouseMoved(() => {
                 if (p.mouseIsPressed) interagirComGrid();
@@ -39,7 +38,6 @@ import {calcularIndice, corParaUint32} from './utils.js';
                     const iGrid = calcularIndice(l, c, configuracoesGrid.colunas);
                     const estado = gridAtual[iGrid];
 
-                    // Resolve a cor antes de passar para a função
                     const corCorpo = MAPA_CORES[estado] || corPadrao;
 
                     pintarQuadrado(
